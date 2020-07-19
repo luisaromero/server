@@ -1,8 +1,10 @@
 // server.js
-
+// const functions = require('firebase-functions');
 const express = require("express");
 const server = express();
 const db = require("./db");
+const cors = require('cors');
+server.use(cors({ origin: true }));
 
 const body_parser = require("body-parser");
 
@@ -92,3 +94,5 @@ db.initialize(dbName, collectionName, function (dbCollection) { // successCallba
 server.listen(port, () => {
    console.log(`Server listening at ${port}`);
 });
+
+// exports.server = functions.https.onRequest(server);
