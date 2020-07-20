@@ -1,5 +1,4 @@
 // server.js
-// const functions = require('firebase-functions');
 const express = require("express");
 const server = express();
 const db = require("./db");
@@ -17,6 +16,11 @@ const port = 4000;
 
 const dbName = "luisadb";
 const collectionName = "clients";
+
+const MongoClient = require("mongodb").MongoClient;
+
+const dbConnectionUrl ="mongodb+srv://db_user_reto:2evcbXg0eMZz0rHe@cluster0.n5ykm.mongodb.net/luisadb?retryWrites=true&w=majority";
+
 
 db.initialize(dbName, collectionName, function (dbCollection) { // successCallback
    // get all items
@@ -40,10 +44,10 @@ db.initialize(dbName, collectionName, function (dbCollection) { // successCallba
       });
    });
 
-   server.get("/items/:id", (request, response) => {
-      const itemId = request.params.id;
+   server.get("/items/:name", (request, response) => {
+      const itemId = request.params.name;
 
-      dbCollection.findOne({ id: itemId }, (error, result) => {
+      dbCollection.findOne({ name: itemId }, (error, result) => {
          if (error) throw error;
          // return item
          response.json(result);
@@ -58,8 +62,8 @@ db.initialize(dbName, collectionName, function (dbCollection) { // successCallba
       });
    });
 
-   server.put("/items/:id", (request, response) => {
-      const itemId = request.params.id;
+   server.put("/items/:name", (request, response) => {
+      const itemId = request.params.name;
       const item = request.body;
       console.log("Editing item: ", itemId, " to be ", item);
 
@@ -73,11 +77,11 @@ db.initialize(dbName, collectionName, function (dbCollection) { // successCallba
       });
    });
 
-   server.delete("/items/:id", (request, response) => {
-      const itemId = request.params.id;
-      console.log("Delete item with id: ", itemId);
+   server.delete("/items/:name", (request, response) => {
+      const itemId = request.params.name;
+      console.log("Delete item with name: ", itemId);
 
-      dbCollection.deleteOne({ id: itemId }, function (error, result) {
+      dbCollection.deleteOne({ name: itemId }, function (error, result) {
          if (error) throw error;
          // send back entire updated list after successful request
          dbCollection.find().toArray(function (_error, _result) {
@@ -94,5 +98,3 @@ db.initialize(dbName, collectionName, function (dbCollection) { // successCallba
 server.listen(port, () => {
    console.log(`Server listening at ${port}`);
 });
-
-// exports.server = functions.https.onRequest(server);
