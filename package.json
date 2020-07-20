@@ -1,18 +1,16 @@
 {
   "name": "functions",
   "main": "index.js",
-  "description": "Cloud Functions for Firebase",
+  "description": "app back for desafio",
   "scripts": {
     "start": "nodemon index.js"
   },
-  "engines": {
-    "node": "8"
-  },
+  "author": "Luisa romero",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "mongodb": "^3.5.9",
     "nodemon": "^2.0.4"
-  },
-  "private": true
+  }
 }
